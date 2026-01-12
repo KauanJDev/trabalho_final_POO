@@ -1,12 +1,10 @@
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.io.*;
-import java.util.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Exec extends JFrame{
+    public Jogador jogadorAtual;
    public Exec(String titulo)  {
       super(titulo);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,136 +46,139 @@ public class Exec extends JFrame{
    }
 
    public ArrayList<String[]> lerClasses(String arquivo) {
-    ArrayList<String[]> classes = new ArrayList<>();
+      ArrayList<String[]> classes = new ArrayList<>();
 
-    try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-        String linha;
-        while ((linha = br.readLine()) != null) {
+      try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+         String linha;
+         while ((linha = br.readLine()) != null) {
             classes.add(linha.split(";"));
-        }
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao ler classes.txt");
-    }
+         }
+      } catch (IOException e) {
+         JOptionPane.showMessageDialog(this, "Erro ao ler classes.txt");
+      }
 
-    return classes;
-}
-
+      return classes;
+   }
 
    public JPanel telaPersonagem() {
-    JPanel panel = new JPanel(new BorderLayout());
+      JPanel panel = new JPanel(new BorderLayout());
 
-    JPanel topo = new JPanel(new GridLayout(2, 1));
-    JLabel lblNome = new JLabel("Nome do personagem:");
-    JTextField txtNome = new JTextField();
+      JPanel topo = new JPanel(new GridLayout(2, 1));
+      JLabel lblNome = new JLabel("Nome do personagem:");
+      JTextField txtNome = new JTextField();
 
-    topo.add(lblNome);
-    topo.add(txtNome);
+      topo.add(lblNome);
+      topo.add(txtNome);
 
-    panel.add(topo, BorderLayout.NORTH);
+      panel.add(topo, BorderLayout.NORTH);
 
-    JPanel centro = new JPanel(new GridLayout(0, 1));
-    ButtonGroup grupo = new ButtonGroup();
+      JPanel centro = new JPanel(new GridLayout(0, 1));
+      ButtonGroup grupo = new ButtonGroup();
 
-    ArrayList<String[]> classes = lerClasses("classes.txt");
+      ArrayList<String[]> classes = lerClasses("classes.txt");
 
-    for (String[] c : classes) {
-        int id = Integer.parseInt(c[0]);
-        String nomeClasse = c[1];
+      for (String[] c : classes) {
+         int id = Integer.parseInt(c[0]);
+         String nomeClasse = c[1];
 
-        JRadioButton radio = new JRadioButton(nomeClasse);
-        radio.setActionCommand(String.valueOf(id));
+         JRadioButton radio = new JRadioButton(nomeClasse);
+         radio.setActionCommand(String.valueOf(id));
 
-        grupo.add(radio);
-        centro.add(radio);
-    }
+         grupo.add(radio);
+         centro.add(radio);
+      }
 
-    panel.add(centro, BorderLayout.CENTER);
+      panel.add(centro, BorderLayout.CENTER);
 
-    JButton criar = new JButton("Criar Personagem");
+      JButton criar = new JButton("Criar Personagem");
 
-    criar.addActionListener(e -> {
-        String nome = txtNome.getText();
+      criar.addActionListener(e -> {
+         String nome = txtNome.getText();
 
-        if (nome.isEmpty() || grupo.getSelection() == null) {
+         if (nome.isEmpty() || grupo.getSelection() == null) {
             JOptionPane.showMessageDialog(this, "Preencha nome e classe");
             return;
-        }
+         }
 
-        int classeId = Integer.parseInt(
-            grupo.getSelection().getActionCommand()
-        );
+         int classeId = Integer.parseInt(
+             grupo.getSelection().getActionCommand()
+         );
 
-        Jogador jogador = criarJogador(nome, classeId);
+         jogadorAtual = criarJogador(nome, classeId);
 
-        JOptionPane.showMessageDialog(
-            this,
-            "Personagem criado: " + jogador.nome +
-            "\nClasse: " + jogador.getClass().getSimpleName()
-        );
+         JOptionPane.showMessageDialog(
+             this,
+             "Personagem criado: " + jogadorAtual.nome +
+             "\nClasse: " + jogadorAtual.getClass().getSimpleName()
+         );
 
-        mudarPanel(telaInicial());
-    });
+         mudarPanel(telaInicial());
+      });
 
-    panel.add(criar, BorderLayout.SOUTH);
+      panel.add(criar, BorderLayout.SOUTH);
 
-    return panel;
-}
+      return panel;
+   }
 
    public void salvarJogo(Jogador jogador) {
+      if (jogador == null) {
+         JOptionPane.showMessageDialog(this, "Nenhum jogador para salvar");
+         return;
+      }
 
-    if (jogador == null) {
-        JOptionPane.showMessageDialog(this, "Nenhum jogador para salvar");
-        return;
-    }
+      try (BufferedWriter bw = new BufferedWriter(new FileWriter("save.txt"))) {
 
-    try (BufferedWriter bw = new BufferedWriter(new FileWriter("save.txt"))) {
+         bw.write("Classe=" + jogador.getClass().getSimpleName());
+         bw.newLine();
 
-        bw.write("Classe=" + jogador.getClass().getSimpleName());
-        bw.newLine();
+         bw.write("Nome=" + jogador.nome);
+         bw.newLine();
 
-        bw.write("Nome=" + jogador.nome);
-        bw.newLine();
+         bw.write("Nivel=" + jogador.getNivel());
+         bw.newLine();
 
-        bw.write("Nivel=" + jogador.getNivel());
-        bw.newLine();
+         bw.write("Experiencia=" + jogador.getExperiencia());
+         bw.newLine();
 
-        bw.write("Experiencia=" + jogador.getExperiencia());
-        bw.newLine();
+         bw.write("VidaAtual=" + jogador.vidaAtual);
+         bw.newLine();
 
-        bw.write("VidaAtual=" + jogador.vidaAtual);
-        bw.newLine();
+         bw.write("VidaMaxima=" + jogador.vidaMaxima);
+         bw.newLine();
 
-        bw.write("VidaMaxima=" + jogador.vidaMaxima);
-        bw.newLine();
+         bw.write("Velocidade=" + jogador.velocidade);
+         bw.newLine();
 
-        bw.write("Velocidade=" + jogador.velocidade);
-        bw.newLine();
+         bw.write("Ataque=" + jogador.ataque);
+         bw.newLine();
 
-        bw.write("Ataque=" + jogador.ataque);
-        bw.newLine();
+         bw.write("Defesa=" + jogador.defesa);
+         bw.newLine();
 
-        bw.write("Defesa=" + jogador.defesa);
-        bw.newLine();
+         bw.write("Armadura=" + jogador.armadura);
+         bw.newLine();
 
-        bw.write("Armadura=" + jogador.armadura);
-        bw.newLine();
-
-        // Atributos específicos
-        if (jogador instanceof Guerreiro) {
+         if (jogador instanceof Guerreiro) {
             Guerreiro g = (Guerreiro) jogador;
             bw.write("Extra=Stamina:" + g.stamina);
-        } 
-        else if (jogador instanceof Clerigo) {
+         } 
+         else if (jogador instanceof Clerigo) {
             Clerigo c = (Clerigo) jogador;
             bw.write("Extra=Fe:" + c.fe);
-        }
+         }
+         else if (jogador instanceof Ladino) {
+            Ladino l = (Ladino) jogador;
+            bw.write("Extra=Agilidade:" + l.esquiva);
+         } 
+         else if (jogador instanceof Mago) {
+            Mago m = (Mago) jogador;
+            bw.write("Extra=Mana:" + m.mana);
+         }
 
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao salvar jogo");
-    }
-}
-
-
+      } catch (IOException e) {
+         JOptionPane.showMessageDialog(this, "Erro ao salvar jogo");
+      }
+   }
 
    public Jogador criarJogador(String nome, int classe)  { 
       switch (classe) {

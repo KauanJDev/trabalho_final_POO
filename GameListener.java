@@ -17,11 +17,11 @@ public class GameListener implements ActionListener {
                 break;
 
             case 2:
-                exec.mudarPanel(exec.telaCampanha());
+                //exec.mudarPanel(exec.telaCampanha());
                 break;
 
             case 3:
-                exec.salvarJogo(null);
+                exec.salvarJogo(exec.jogadorAtual);
                 break;
 
             case 4:
