@@ -1,0 +1,11 @@
+Classe=Guerreiro
+Nome=fSF
+Nivel=5
+Experiencia=0
+VidaAtual=160
+VidaMaxima=160
+Velocidade=1
+Ataque=30
+Defesa=17
+Armadura=15
+Stamina:120

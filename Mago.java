@@ -63,4 +63,12 @@ public class Mago extends Jogador {
         }
         return nivelAtual != getNivel();
     }
+
+    public String acao2(Entidade e) {
+        return BolaDeFogo(e);
+    }
+
+    public String acao3() {
+        return ArmaduraArcana();
+    }
 }

@@ -67,4 +67,13 @@ public class Clerigo extends Jogador {
         }
         return nivelAtual != getNivel();
     }
+
+
+    public String acao2(Entidade alvo) {
+        return LuzDivina();
+    }
+
+    public String acao3() {
+        return Rezar();
+    }
 }

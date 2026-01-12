@@ -107,4 +107,6 @@ public abstract class Jogador extends Entidade {
    }
 
    public abstract boolean subirDeNivel();
+   public abstract String acao2(Entidade e);
+   public abstract String acao3();
 }

@@ -1,5 +1,7 @@
 import java.awt.event.*;
 
+import javax.swing.JOptionPane;
+
 public class GameListener implements ActionListener {
     private Exec exec;
 
@@ -17,9 +19,12 @@ public class GameListener implements ActionListener {
                 break;
 
             case 2:
-                //exec.mudarPanel(exec.telaCampanha());
+                if (exec.jogadorAtual == null) {
+                    JOptionPane.showMessageDialog(exec, "Crie um personagem antes!");
+                    return;
+                }
+                exec.iniciarCampanha();
                 break;
-
             case 3:
                 exec.salvarJogo(exec.jogadorAtual);
                 break;

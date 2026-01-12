@@ -53,4 +53,13 @@ public class Ladino extends Jogador {
         }
         return nivelAtual != getNivel();
     }
+
+    public String acao2(Entidade e) {
+        return sabotar(e);
+    }
+
+    public String acao3() {
+        esquiva = true;
+        return nome + " usou Esquiva.";
+    }
 }

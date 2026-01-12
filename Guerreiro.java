@@ -78,4 +78,12 @@ public class Guerreiro extends Jogador {
         }
         return nivelAtual != getNivel();
     }
+
+    public String acao2(Entidade e) {
+        return ataqueEspecial(e);
+    }
+
+    public String acao3() {
+        return descasar();
+    }
 }
