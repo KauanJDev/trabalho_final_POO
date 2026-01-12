@@ -25,7 +25,7 @@ public class GameListener implements ActionListener {
                 break;
 
             case 4:
-                System.out.println("Carregar jogo");
+                exec.carregarJogo();
                 break;
         }
     }

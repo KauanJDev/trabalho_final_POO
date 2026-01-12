@@ -12,6 +12,7 @@ public class Guerreiro extends Jogador {
        defesa = 5;
        armadura = 10;
        staminaMaxima = 80;
+       stamina = staminaMaxima;
     }
 
     public Guerreiro(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {
@@ -21,6 +22,10 @@ public class Guerreiro extends Jogador {
 
     public String agredir(Entidade e) {
         return super.agredir(e);
+    }
+
+    public String salvarExtra() {
+        return "Stamina:" + stamina;
     }
 
     public String ataqueEspecial(Entidade e) {

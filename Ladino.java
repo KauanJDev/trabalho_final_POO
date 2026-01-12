@@ -26,6 +26,10 @@ public class Ladino extends Jogador {
         return nome + " usou Sabotar em " + e.nome + ", reduzindo a defesa em " + reducaoDefesa + ".";
     }
 
+    public String salvarExtra(){
+        return "";
+    }
+
     public String agredir(Entidade e) {
         return super.agredir(e);
     }

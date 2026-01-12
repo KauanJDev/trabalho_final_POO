@@ -11,12 +11,13 @@ public class Mago extends Jogador {
        ataque = 1;
        defesa = 3;
        armadura = 7;
-       mana = 100;
+       manaMaxima = 100;
+       mana = manaMaxima;
     }
 
     public Mago(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {
         super(nome, vidaMaxima, velocidade, ataque, defesa, armadura);
-        this.mana = 100;
+        this.mana = manaMaxima;
     }
 
     public String agredir(Entidade e) {
@@ -35,6 +36,10 @@ public class Mago extends Jogador {
         armadura += armaduraRecuperada;
         mana -= 20;
         return nome + " usou Armadura Arcana e recuperou " + armaduraRecuperada + " de armadura.";
+    }
+
+    public String salvarExtra() {
+        return "Mana:" + mana;
     }
 
     public boolean subirDeNivel() {

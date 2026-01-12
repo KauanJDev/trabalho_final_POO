@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 public class Clerigo extends Jogador {
     public int fe;
+    private int feMaxima;
 
     public Clerigo(String nome)  {
        super(nome);
@@ -9,12 +10,13 @@ public class Clerigo extends Jogador {
        ataque = 5;
        defesa = 7;
        armadura = 3;
-       fe = 100;
+       feMaxima = 100;
+       fe = feMaxima;
     }
 
     public Clerigo(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {
         super(nome, vidaMaxima, velocidade, ataque, defesa, armadura);
-        fe = 100;
+        fe = feMaxima;
     }
 
     public String agredir(Entidade e) {
@@ -40,6 +42,11 @@ public class Clerigo extends Jogador {
         fe -= 20;
         return nome + " usou Armadura Divina e recuperou " + armaduraRecuperada + " de armadura.";
     }
+
+    public String salvarExtra() {
+        return "Fe:" + fe;
+    }
+
 
     public boolean subirDeNivel() {
        int nivelAtual = getNivel();

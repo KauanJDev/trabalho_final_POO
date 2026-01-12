@@ -93,6 +93,8 @@ public abstract class Jogador extends Entidade {
       nivel++;
    }
 
+   public abstract String salvarExtra();
+
    public void usarItem(Item item, Entidade e) {
       if (item.dano > 0) {
          agredirComItem(e, item);
