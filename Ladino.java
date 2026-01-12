@@ -10,6 +10,7 @@ public class Ladino extends Jogador {
        defesa = 3;
        armadura = 5;
        esquiva = false;
+       classe = 3;
     }
 
     public Ladino(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {

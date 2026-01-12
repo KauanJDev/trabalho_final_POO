@@ -4,7 +4,7 @@ public abstract class Jogador extends Entidade {
    private int nivel;
    public ArrayList<Item> inventario;
    public String habilidades;
-   private int classe;
+   public int classe;
 
    public Jogador() {
       super();

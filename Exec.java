@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class Exec extends JFrame{
     public Jogador jogadorAtual;
+    // Bestiario 
+    public Encontro encontroAtual;
     
     public Exec(String titulo) {
         super(titulo);
@@ -117,6 +119,53 @@ public class Exec extends JFrame{
         panel.add(criar, BorderLayout.SOUTH);
         
         return panel;
+    }
+
+    public JPanel telaDeCombate()  {
+       JPanel panel = new JPanel();
+
+      JButton acao1 = new JButton("Agredir");
+      panel.add(acao1);
+      jogadorAtual = criarJogador("Sergio", 1);
+      JButton acao2;
+      JButton acao3;
+      if(jogadorAtual.classe == 1)  {
+
+            acao2 = new JButton("Ataque Especial");
+            acao3 = new JButton("Descancar");
+
+      } else if(jogadorAtual.classe == 2)  {
+
+            acao2 = new JButton("Bola de Fogo");
+            acao3 = new JButton("Armadura Arcana");
+
+      } else if(jogadorAtual.classe == 3)  {
+
+            acao2 = new JButton("Sabotar");
+            acao3 = new JButton("Esquivar");
+
+      } else if(jogadorAtual.classe == 4)  {
+
+            acao2 = new JButton("Luz Divina");
+            acao3 = new JButton("Rezar");
+
+      } else  {
+            acao2 = new JButton("Ataque Especial");
+            acao3 = new JButton("Descancar");
+      }
+
+      panel.add(acao2);
+      panel.add(acao3);
+      JButton acao4 = new JButton("Usar Item");
+      panel.add(acao4);
+      JButton acao5 = new JButton("Voltar Pra Tela Inicial");
+      panel.add(acao5);
+   
+      return panel;
+    }
+
+    public void campanha()  {
+
     }
     
     public void salvarJogo(Jogador jogador) {

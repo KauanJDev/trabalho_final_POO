@@ -13,6 +13,7 @@ public class Mago extends Jogador {
        armadura = 7;
        manaMaxima = 100;
        mana = manaMaxima;
+       classe = 2;
     }
 
     public Mago(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {

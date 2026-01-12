@@ -13,6 +13,7 @@ public class Guerreiro extends Jogador {
        armadura = 10;
        staminaMaxima = 80;
        stamina = staminaMaxima;
+       classe = 1;
     }
 
     public Guerreiro(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {

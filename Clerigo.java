@@ -12,6 +12,7 @@ public class Clerigo extends Jogador {
        armadura = 3;
        feMaxima = 100;
        fe = feMaxima;
+       classe = 4;
     }
 
     public Clerigo(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {
