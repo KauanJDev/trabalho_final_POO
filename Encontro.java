@@ -108,7 +108,7 @@ public class Encontro {
          if (loot != null && !loot.isEmpty()) {
             sb.append("Itens obtidos: ");
             for (Item item : loot) {
-               jogador.inventario.add(item);
+               jogador.adicionarItem(item);
                sb.append(item.nome).append(" ");
             }
             sb.append("\n");
