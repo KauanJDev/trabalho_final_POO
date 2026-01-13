@@ -30,10 +30,6 @@ public abstract class Jogador extends Entidade {
       inventario = new ArrayList<Item>();
    }
 
-   public int getClasse()  {
-      return classe;
-   }
-
    public String agredir(Entidade e) {
       int danoArmadura = Math.max(0, ataque - e.defesa);
 

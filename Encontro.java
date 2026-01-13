@@ -38,18 +38,22 @@ public class Encontro {
          resultado.append(escolherAcao(jogador, opc)).append("\n");
       }
 
+      resultado.append(String.format("Sua Vida: %d/%d \n Vida do %s %d/%d\n", jogador.vidaAtual, jogador.vidaMaxima, inimigo.nome, inimigo.vidaAtual, inimigo.vidaMaxima));
+
       contadorAcoes++;
       return resultado.toString();
    }
 
    public String encerrarEncontro() {
       StringBuilder sb = new StringBuilder();
+      int nivelAtual = jogador.getNivel();
 
       if (!jogador.morrer()) {
          jogador.ganharExperiencia(expAdquirida);
+         jogador.vidaAtual = jogador.vidaMaxima;
          sb.append(jogador.nome).append(" ganhou ").append(expAdquirida).append(" XP.\n");
 
-         if (jogador.subirDeNivel()) {
+         if (nivelAtual != jogador.getNivel()) {
             sb.append(jogador.nome).append(" subiu de nível! Agora é nível ").append(jogador.getNivel()).append("\n");
          }
 
@@ -61,6 +65,7 @@ public class Encontro {
             sb.append("\n");
          }
       } else {
+         jogador.vidaAtual = jogador.vidaMaxima;
          sb.append(jogador.nome).append(" morreu!\n");
       }
 
