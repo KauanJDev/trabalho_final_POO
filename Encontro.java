@@ -10,16 +10,7 @@ public class Encontro {
    private int contadorAcoes;
 
    private String escolherAcao(Entidade e, int opc) {
-      if (e instanceof Jogador j) {
-         switch (opc) {
-            case 1: return j.agredir(inimigo);
-            case 2: return j.acao2(inimigo);
-            case 3: return j.acao3();
-         }
-      } else if (e instanceof Inimigo i) {
-         return i.agredir(jogador);
-      }
-      return "";
+      return e.executarAcao(opc, e == jogador ? inimigo : jogador);
    }
 
    public void iniciarEncontro() {
@@ -27,21 +18,67 @@ public class Encontro {
       jogadorComeca = jogador.velocidade >= inimigo.velocidade;
    }
 
+   public String mensagemInicio() {
+      return "Apareceu um " + inimigo.nome + "!";
+   }
+
    public String passarTurno(int opc) {
       StringBuilder resultado = new StringBuilder();
 
       if (jogadorComeca) {
          resultado.append(escolherAcao(jogador, opc)).append("\n");
-         resultado.append(escolherAcao(inimigo, inimigoAcoes.get(contadorAcoes))).append("\n");
+
+         if (inimigo.morrer()) {
+            resultado.append(inimigo.nome).append(" morreu!\n");
+            resultado.append(encerrarEncontro());
+            return resultado.toString();
+         }
+
+         resultado.append(
+            escolherAcao(inimigo, inimigoAcoes.get(contadorAcoes))
+         ).append("\n");
+
       } else {
-         resultado.append(escolherAcao(inimigo, inimigoAcoes.get(contadorAcoes))).append("\n");
+         resultado.append(
+            escolherAcao(inimigo, inimigoAcoes.get(contadorAcoes))
+         ).append("\n");
+
+         if (jogador.morrer()) {
+            resultado.append(jogador.nome).append(" morreu!\n");
+            resultado.append(encerrarEncontro());
+            return resultado.toString();
+         }
+
          resultado.append(escolherAcao(jogador, opc)).append("\n");
       }
 
-      resultado.append(String.format("Sua Vida: %d/%d \n Vida do %s %d/%d\n", jogador.vidaAtual, jogador.vidaMaxima, inimigo.nome, inimigo.vidaAtual, inimigo.vidaMaxima));
+      resultado.append(String.format(
+         "Sua Vida: %d/%d\nVida do %s: %d/%d\n",
+         jogador.vidaAtual, jogador.vidaMaxima,
+         inimigo.nome, inimigo.vidaAtual, inimigo.vidaMaxima
+      ));
 
       contadorAcoes++;
       return resultado.toString();
+   }
+
+
+   private Item gerarDrop() {
+      Item item = new Item();
+
+      if (Math.random() < 0.5) {
+         item.nome = "Poção de Vida";
+         item.descricao = "Recupera 30 de vida";
+         item.recuperacaoVida = 30;
+         item.dano = 0;
+      } else {
+         item.nome = "Bomba";
+         item.descricao = "Causa 20 de dano";
+         item.dano = 20;
+         item.recuperacaoVida = 0;
+      }
+
+      return item;
    }
 
    public String encerrarEncontro() {
@@ -51,15 +88,28 @@ public class Encontro {
       if (!jogador.morrer()) {
          jogador.ganharExperiencia(expAdquirida);
          jogador.vidaAtual = jogador.vidaMaxima;
-         sb.append(jogador.nome).append(" ganhou ").append(expAdquirida).append(" XP.\n");
+
+         sb.append(jogador.nome)
+           .append(" ganhou ")
+           .append(expAdquirida)
+           .append(" XP.\n");
 
          if (nivelAtual != jogador.getNivel()) {
-            sb.append(jogador.nome).append(" subiu de nível! Agora é nível ").append(jogador.getNivel()).append("\n");
+            sb.append(jogador.nome)
+              .append(" subiu de nível! Agora é nível ")
+              .append(jogador.getNivel())
+              .append("\n");
          }
+
+         if (loot == null) {
+            loot = new ArrayList<>();
+         }
+         loot.add(gerarDrop());
 
          if (loot != null && !loot.isEmpty()) {
             sb.append("Itens obtidos: ");
             for (Item item : loot) {
+               jogador.inventario.add(item);
                sb.append(item.nome).append(" ");
             }
             sb.append("\n");

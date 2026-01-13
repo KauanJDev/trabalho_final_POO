@@ -6,6 +6,7 @@ public class Clerigo extends Jogador {
     public Clerigo(String nome)  {
        super(nome);
        vidaMaxima = 90;
+       vidaAtual = vidaMaxima;
        velocidade = 3;
        ataque = 5;
        defesa = 7;
@@ -33,6 +34,7 @@ public class Clerigo extends Jogador {
     public String LuzDivina(){
         int cura = 30;
         vidaAtual += cura;
+        if(vidaAtual > vidaMaxima) vidaAtual = vidaMaxima;
         fe -= 25;
         return nome + " usou Luz Divina, recuperando " + cura + " de vida.";
     }

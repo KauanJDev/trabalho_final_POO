@@ -7,6 +7,7 @@ public class Mago extends Jogador {
     public Mago(String nome)  {
        super(nome);
        vidaMaxima = 80;
+       vidaAtual = vidaMaxima;
        velocidade = 2;
        ataque = 1;
        defesa = 3;

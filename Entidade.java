@@ -27,6 +27,8 @@ public abstract class Entidade {
    }
 
    public abstract String agredir(Entidade e);
+
+   public abstract String executarAcao(int opc, Entidade alvo);
    
    public String recuperarArmadura()
    {

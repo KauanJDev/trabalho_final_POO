@@ -9,17 +9,21 @@ public abstract class Jogador extends Entidade {
    public Jogador() {
       super();
       experiencia = 0;
+      vidaAtual = vidaMaxima;
       nivel = 1;
       habilidades = "";
       inventario = new ArrayList<Item>();
    }
    public Jogador(String nome) {
+      super();
       this.nome = nome;
+      vidaAtual = vidaMaxima;
       experiencia = 0;
       nivel = 1;
       habilidades = "";
-      inventario = new ArrayList<Item>();
+      inventario = new ArrayList<>();
    }
+
 
    public Jogador(String nome, int vidaMaxima, int velocidade, int ataque, int defesa, int armadura) {
       super(nome, vidaMaxima, velocidade, ataque, defesa, armadura);
@@ -89,18 +93,46 @@ public abstract class Jogador extends Entidade {
       nivel++;
    }
 
+   public String executarAcao(int opc, Entidade alvo) {
+      switch (opc) {
+        case 1: return agredir(alvo);
+        case 2: return acao2(alvo);
+        case 3: return acao3();
+        default: return "Ação inválida";
+      }
+   }
+
    public abstract String salvarExtra();
 
-   public void usarItem(Item item, Entidade e) {
+   public String usarItem(Item item, Entidade e) {
       if (item.dano > 0) {
+         int vidaAntes = e.vidaAtual;
          agredirComItem(e, item);
+         int danoCausado = vidaAntes - e.vidaAtual;
+
+         return nome + " usou " + item.nome +
+                " e causou " + danoCausado + " de dano em " +
+                e.nome + ". Vida restante: " + e.vidaAtual;
+
       } else if (item.recuperacaoVida > 0) {
+         int vidaAntes = vidaAtual;
+
          vidaAtual = Math.min(
             vidaAtual + item.recuperacaoVida,
             vidaMaxima
          );
+
+         int curado = vidaAtual - vidaAntes;
+
+         return nome + " usou " + item.nome +
+                " e recuperou " + curado +
+                " de vida. Vida atual: " +
+                vidaAtual + "/" + vidaMaxima;
       }
+
+      return "Nada aconteceu.";
    }
+
 
    public abstract boolean subirDeNivel();
    public abstract String acao2(Entidade e);

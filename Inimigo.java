@@ -18,4 +18,8 @@ public class Inimigo extends Entidade {
                     nome, e.nome, excesso, e.vidaAtual);
         }
     }
+
+    public String executarAcao(int opc, Entidade alvo) {
+        return agredir(alvo);
+    }
 }

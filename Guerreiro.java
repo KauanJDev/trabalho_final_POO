@@ -7,6 +7,7 @@ public class Guerreiro extends Jogador {
     public Guerreiro(String nome)  {
        super(nome);
        vidaMaxima = 120;
+       vidaAtual = vidaMaxima;
        velocidade = 1;
        ataque = 10;
        defesa = 5;

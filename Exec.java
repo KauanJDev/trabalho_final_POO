@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Exec extends JFrame {
     public Jogador jogadorAtual;
@@ -50,15 +51,14 @@ public class Exec extends JFrame {
     public ArrayList<String[]> lerClasses(String arquivo) {
         ArrayList<String[]> classes = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) {
+        try (Scanner sc = new Scanner(new File(arquivo))) {
+            while (sc.hasNextLine()) {
+                String linha = sc.nextLine();
                 classes.add(linha.split(";"));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao ler classes.txt");
         }
-
         return classes;
     }
 
@@ -127,6 +127,7 @@ public class Exec extends JFrame {
 
         JTextArea log = new JTextArea(10, 30);
         log.setEditable(false);
+        log.append(encontro.mensagemInicio() + "\n");
         JScrollPane scroll = new JScrollPane(log);
         panel.add(scroll, BorderLayout.CENTER);
 
@@ -193,9 +194,20 @@ public class Exec extends JFrame {
         botoes.add(acao3);
 
         JButton acao4 = new JButton("Usar Item");
+
         acao4.addActionListener(e -> {
-            log.append("Item usado!\n");
+            if (jogadorAtual.inventario.isEmpty()) {
+                log.append("Inventário vazio!\n");
+                return;
+            }
+            Item item = jogadorAtual.inventario.remove(0);
+            jogadorAtual.usarItem(item, encontroEmAndamento.inimigo);
+            log.append("Você usou: " + item.nome + "\n");
+            String resultado = jogadorAtual.usarItem(item, encontroEmAndamento.inimigo);
+            log.append(resultado + "\n"); 
+            verificarFimEncontro();
         });
+
         botoes.add(acao4);
 
         JButton acao5 = new JButton("Voltar para tela inicial");

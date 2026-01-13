@@ -5,6 +5,7 @@ public class Ladino extends Jogador {
     public Ladino(String nome)  {
        super(nome);
        vidaMaxima = 60;
+       vidaAtual = vidaMaxima;
        velocidade = 5;
        ataque = 5;
        defesa = 3;
