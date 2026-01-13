@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Ladino extends Jogador {
+public class Ladino extends Jogador implements Acoes{
    public boolean esquiva;
 
     public Ladino(String nome)  {

@@ -1,10 +1,11 @@
 import java.util.ArrayList;
-public abstract class Jogador extends Entidade {
+public abstract class Jogador extends Entidade implements Acoes {
    private int experiencia;
    private int nivel;
    public ArrayList<Item> inventario;
    public String habilidades;
    public int classe;
+   static int pontos;
 
    public Jogador() {
       super();
@@ -135,6 +136,4 @@ public abstract class Jogador extends Entidade {
 
 
    public abstract boolean subirDeNivel();
-   public abstract String acao2(Entidade e);
-   public abstract String acao3();
 }

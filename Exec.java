@@ -13,7 +13,7 @@ public class Exec extends JFrame {
     public Exec(String titulo) {
         super(titulo);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
+        setSize(800, 200);
         mudarPanel(telaInicial());
         setVisible(true);
     }
@@ -28,22 +28,28 @@ public class Exec extends JFrame {
     public JPanel telaInicial() {
         JPanel panel = new JPanel();
         GameListener listener = new GameListener(this);
+        JPanel center = new JPanel();
+
+        JLabel label = new JLabel("Pontuação: " + Jogador.pontos);
+        panel.add(label, BorderLayout.NORTH);
 
         GameButton personagem = new GameButton("Criar Personagem", 1);
         personagem.addActionListener(listener);
-        panel.add(personagem);
+        center.add(personagem);
 
         GameButton campanha = new GameButton("Jogar Campanha", 2);
         campanha.addActionListener(listener);
-        panel.add(campanha);
+        center.add(campanha);
 
         GameButton salvar = new GameButton("Salvar Jogo", 3);
         salvar.addActionListener(listener);
-        panel.add(salvar);
+        center.add(salvar);
 
         GameButton carregar = new GameButton("Carregar Jogo", 4);
         carregar.addActionListener(listener);
-        panel.add(carregar);
+        center.add(carregar);
+
+        panel.add(center, BorderLayout.CENTER);
 
         return panel;
     }
@@ -205,6 +211,10 @@ public class Exec extends JFrame {
             log.append("Você usou: " + item.nome + "\n");
             String resultado = jogadorAtual.usarItem(item, encontroEmAndamento.inimigo);
             log.append(resultado + "\n"); 
+            if (encontro.jogador.morrer() || encontro.inimigo.morrer()) {
+                resultado = encontro.encerrarEncontro();
+                log.append(resultado + "\n");
+            }
             verificarFimEncontro();
         });
 
@@ -267,12 +277,13 @@ public class Exec extends JFrame {
         campanha = new ArrayList<>();
         encontroAtual = 0;
 
-        campanha.add(criarEncontro(new Inimigo("Goblin", 30, 2, 5, 2, 0), 500));
+        campanha.add(criarEncontro(new Inimigo("Goblin", 30, 2, 5, 2, 0), 50));
         campanha.add(criarEncontro(new Inimigo("Goblin", 30, 2, 5, 2, 0), 50));
         campanha.add(criarEncontro(new Inimigo("Goblin", 30, 2, 5, 2, 0), 50));
         campanha.add(criarEncontro(new Inimigo("Goblin", 30, 2, 5, 2, 0), 50));
         campanha.add(criarEncontro(new Inimigo("Orc", 60, 1, 8, 4, 3), 80));
         campanha.add(criarEncontro(new Inimigo("Dragão", 150, 2, 15, 8, 10), 200));
+        campanha.add(criarEncontro(new Inimigo("Linus Torvalds", 200, 5, 30, 4, 2), 500));
 
         iniciarProximoEncontro();
     }

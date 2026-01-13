@@ -14,6 +14,7 @@ public class Encontro {
    }
 
    public void iniciarEncontro() {
+      jogador.vidaAtual = jogador.vidaMaxima;
       turnoAtual = 1;
       jogadorComeca = jogador.velocidade >= inimigo.velocidade;
    }
@@ -27,12 +28,6 @@ public class Encontro {
 
       if (jogadorComeca) {
          resultado.append(escolherAcao(jogador, opc)).append("\n");
-
-         if (inimigo.morrer()) {
-            resultado.append(inimigo.nome).append(" morreu!\n");
-            resultado.append(encerrarEncontro());
-            return resultado.toString();
-         }
 
          resultado.append(
             escolherAcao(inimigo, inimigoAcoes.get(contadorAcoes))
@@ -58,7 +53,9 @@ public class Encontro {
          inimigo.nome, inimigo.vidaAtual, inimigo.vidaMaxima
       ));
 
-      contadorAcoes++;
+      if (contadorAcoes >= inimigoAcoes.size()) {
+       contadorAcoes = 0;
+      }
       return resultado.toString();
    }
 
@@ -87,9 +84,11 @@ public class Encontro {
 
       if (!jogador.morrer()) {
          jogador.ganharExperiencia(expAdquirida);
+         jogador.pontos += expAdquirida;
          jogador.vidaAtual = jogador.vidaMaxima;
 
-         sb.append(jogador.nome)
+         sb.append(String.format("%s morreu! \n", inimigo.nome))
+           .append(jogador.nome)
            .append(" ganhou ")
            .append(expAdquirida)
            .append(" XP.\n");
@@ -115,7 +114,6 @@ public class Encontro {
             sb.append("\n");
          }
       } else {
-         jogador.vidaAtual = jogador.vidaMaxima;
          sb.append(jogador.nome).append(" morreu!\n");
       }
 

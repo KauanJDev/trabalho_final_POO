@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Clerigo extends Jogador {
+public class Clerigo extends Jogador implements Acoes{
     public int fe;
     private int feMaxima;
 

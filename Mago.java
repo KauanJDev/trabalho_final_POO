@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Mago extends Jogador {
+public class Mago extends Jogador implements Acoes{
 
     private int manaMaxima;
     public int mana;
@@ -34,9 +34,12 @@ public class Mago extends Jogador {
     }
 
     public String ArmaduraArcana() {
-        int armaduraRecuperada = 10;
+      int armaduraRecuperada = 0;
+       if(armadura<=30)  {
+           armaduraRecuperada = 10;
+       }
         armadura += armaduraRecuperada;
-        mana -= 20;
+        mana -= 40;
         return nome + " usou Armadura Arcana e recuperou " + armaduraRecuperada + " de armadura.";
     }
 
